@@ -1,38 +1,88 @@
-import { useState, FC, ChangeEvent } from 'react'
-import { Typography, Paper, Box, TextField } from '@mui/material'
-import { IWorld } from '../../interface'
+import { useState, ChangeEvent, useEffect, KeyboardEvent } from 'react'
+import { Typography, Box, TextField, Card, CardActionArea, CardMedia, CardContent } from '@mui/material'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { getGif } from '../../redux/actions/uiActions'
+import confetti from "canvas-confetti"
+
+export const SpanishToEnglish = () => {
+
+    const { currentGif } = useAppSelector(state => state.ui)
+    const { words } = useAppSelector(state => state.word)
+    const dispatch = useAppDispatch()
 
 
-interface Props {
-    worlds: IWorld[]
-}
-
-export const SpanishToEnglish: FC<Props> = ({ worlds }) => {
-
-    const [value, setValue] = useState('')
+    const [inputValue, setInpuValue] = useState('')
+    const [position, setPosition] = useState(0)
+    const [help, setHelp] = useState(false)
 
 
-    const world = worlds[0]
+    const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setInpuValue(event.target.value)
 
-    const handlerChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value)
+        if (event.target.value === words[position].english) {
+            setPosition(position + 1)
+            setInpuValue('')
+            setHelp(false)
+            confetti({
+                zIndex: 999,
+                particleCount: 200,
+                spread: 160,
+                angle: 90,
+                origin: {
+                    x: 0.5,
+                    y: 1
+                }
+            })
+        }
     }
 
+    const onInputKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter') {
+            setHelp(true)
+        }
+    }
+
+    useEffect(() => {
+        dispatch(getGif(words[position].english))
+    }, [position])
+
+
+
+
     return (
-        <Box style={{ padding: 20 }}>
+        <Box display='flex' padding={2} onKeyDown={onInputKeyDown}>
             <Box sx={{ margin: '0px auto', minWidth: 300, maxWidth: 800 }}>
-                <Paper elevation={1}>
-                    <Typography>Aqui va la imagen</Typography>
-                </Paper>
-                <Typography textTransform='capitalize'>{world.spanish}</Typography>
+                <Card onClick={() => setHelp(!help)}>
+                    <CardActionArea sx={{ padding: 2 }}>
+                        <CardMedia
+                            component="img"
+                            height="400"
+                            image={currentGif}
+                            alt={words[position].english}
+                        />
+                        <CardContent>
+                            <Typography fontWeight={help ? 200 : 400} variant="h5" component="h5">
+                                {words[position].spanish}
+                            </Typography>
+                            {help &&
+                                <Typography fontWeight={600} variant="h5" component="h5">
+                                    {words[position].english}
+                                </Typography>
+                            }
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+
                 <TextField
-                    label="Escribe"
-                    value={value}
-                    onChange={handlerChange}
+                    placeholder={`Traduce "${words[position].spanish}"`}
+                    value={inputValue}
+                    onChange={onInputChange}
+                    sx={{ marginTop: 2, width: '100%' }}
                 />
-                {value === world.english &&
-                    <Typography textTransform='uppercase'>CORRECTO</Typography>
-                }
+
+                <Typography variant='body2' color="text.secondary" marginTop={2}>
+                    Si no la sabes, presiona la tecla "Enter" o haz clic en la imagen para ver la respuesta
+                </Typography>
             </Box>
         </Box>
     )

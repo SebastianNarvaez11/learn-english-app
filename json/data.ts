@@ -1,6 +1,6 @@
-import { IWorld } from "../interface";
+import { IWord } from "../interface";
 
-export const worldsData: IWorld[] = [
+export const wordsData: IWord[] = [
     {
         english: 'work',
         spanish: 'trabajar'
