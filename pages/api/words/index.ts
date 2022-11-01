@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { db } from '../../database'
-import { IWord } from '../../interface'
-import { WordModel } from '../../models'
+import { db } from '../../../database'
+import { IWord } from '../../../interface'
+import { WordModel } from '../../../models'
 
 type Data =
     | { message: string }

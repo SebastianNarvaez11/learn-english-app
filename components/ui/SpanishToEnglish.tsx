@@ -3,6 +3,7 @@ import { Typography, Box, TextField, Card, CardActionArea, CardMedia, CardConten
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getGif } from '../../redux/actions/uiActions'
 import confetti from "canvas-confetti"
+import { updateWord } from '../../redux/actions/wordActions'
 
 export const SpanishToEnglish = () => {
 
@@ -37,8 +38,16 @@ export const SpanishToEnglish = () => {
     }
 
     const onInputKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && help === false) {
             setHelp(true)
+            dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points + 1))
+        }
+    }
+
+    const onClickHelp = () => {
+        if (help === false) {
+            setHelp(true)
+            dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points + 1))
         }
     }
 
@@ -52,7 +61,7 @@ export const SpanishToEnglish = () => {
     return (
         <Box display='flex' padding={2} onKeyDown={onInputKeyDown}>
             <Box sx={{ margin: '0px auto', minWidth: 300, maxWidth: 800 }}>
-                <Card onClick={() => setHelp(!help)}>
+                <Card onClick={onClickHelp}>
                     <CardActionArea sx={{ padding: 2 }}>
                         <CardMedia
                             component="img"
@@ -62,7 +71,7 @@ export const SpanishToEnglish = () => {
                         />
                         <CardContent>
                             <Typography fontWeight={help ? 200 : 400} variant="h5" component="h5">
-                                {words[position].spanish}
+                                {words[position].spanish} - {words[position].points}
                             </Typography>
                             {help &&
                                 <Typography fontWeight={600} variant="h5" component="h5">
