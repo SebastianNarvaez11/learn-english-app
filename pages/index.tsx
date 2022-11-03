@@ -1,3 +1,4 @@
+import { Box, Card, Typography } from '@mui/material';
 import { useEffect } from 'react'
 import { MainLayout } from "../components/layouts";
 import { SpanishToEnglish } from "../components/ui";
@@ -16,6 +17,14 @@ export default function Home() {
 
   return (
     <MainLayout>
+      <Box>
+        <Card>
+          <Typography>Aprendidas</Typography>
+        </Card>
+        <Card>
+          <Typography>Por Aprender</Typography>
+        </Card>
+      </Box>
       {loadingWords ?
         <h1>Cargando...</h1>
         :

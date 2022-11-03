@@ -5,7 +5,7 @@ const WordSchema = new Schema({
 
     spanish: {type: String, required: [ true, 'El significado en español es obligatorio']},
     english: {type: String, required: [ true, 'El significado en español es obligatorio']},
-    points: { type: Number },
+    points: { type: Number, default: 0},
     createdAt: { type: Number },
 })
 
