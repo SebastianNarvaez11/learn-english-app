@@ -922,6 +922,13 @@
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.10.11.tgz#e91640dfd2bd62c7f5b27da7e540f5d07e5cbc50"
   integrity sha512-u5ff+UCFDHcR8MoQ8tuJR4c35vt7T/ki3aMEE2O3XQoGs8KJSrBiisFpFKyldg9/W2NSyoZxN+kxEGIfRxh+9Q==
 
+"@mui/icons-material@^5.10.9":
+  version "5.10.9"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.10.9.tgz#f9522c49797caf30146acc576e37ecb4f95bbc38"
+  integrity sha512-sqClXdEM39WKQJOQ0ZCPTptaZgqwibhj2EFV9N0v7BU1PO8y4OcX/a2wIQHn4fNuDjIZktJIBrmU23h7aqlGgg==
+  dependencies:
+    "@babel/runtime" "^7.19.0"
+
 "@mui/material@^5.10.11":
   version "5.10.11"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.10.11.tgz#73c38b29d2df5e2f9a0825b363279bb0a2aa40df"
@@ -1628,6 +1635,13 @@ dom-helpers@^5.0.1:
   dependencies:
     "@babel/runtime" "^7.8.7"
     csstype "^3.0.2"
+
+emoji-picker-react@^4.4.4:
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.4.4.tgz#93086e9ff3f3e54e32a9a040c239b20a6d99a035"
+  integrity sha512-FA15/5AWh7LxWUT3flTiquLt7pbzZxny07gQbmyErzEi0AT7qo7hSbEz10C2oiXOAPGUAskESdudbmDiLVSVgQ==
+  dependencies:
+    clsx "^1.2.1"
 
 emoji-regex@^9.2.2:
   version "9.2.2"

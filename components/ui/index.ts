@@ -1,1 +1,1 @@
-export * from './SpanishToEnglish'
+export * from './Navbar'

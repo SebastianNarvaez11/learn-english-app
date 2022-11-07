@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import listSlice from "./slices/listSlice";
 import uiSlice from './slices/uiSlice'
 import wordSlice from './slices/wordSlice'
 
@@ -7,7 +8,8 @@ import wordSlice from './slices/wordSlice'
 export const store = configureStore({
     reducer: {
         ui: uiSlice,
-        word : wordSlice
+        word : wordSlice,
+        list: listSlice
     }
 })
 
