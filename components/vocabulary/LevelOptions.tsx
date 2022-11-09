@@ -1,26 +1,26 @@
-import { useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Typography, Box, Card, CardActionArea, CardContent, Grid, Button } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import confetti from "canvas-confetti"
 import { updateWord } from '../../redux/actions/wordActions'
+import { IWord } from '../../interface'
 
+interface Props {
+    words: IWord[],
+    position: number,
+    setPosition: Dispatch<SetStateAction<number>>
+}
 
-export const LevelOptions = () => {
-
-    const { words } = useAppSelector(state => state.word)
+export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
 
     const dispatch = useAppDispatch()
 
-    const [position, setPosition] = useState(0)
     const [help, setHelp] = useState(false)
 
     const onClickHelp = () => {
         if (help === false) return setHelp(true)
     }
-
-    console.log("posicion actual: " + position);
-
 
     const onHard = () => {
         dispatch(updateWord(words[position]._id, undefined, undefined, 2))

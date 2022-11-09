@@ -1,19 +1,24 @@
-import { useState, ChangeEvent, useEffect, KeyboardEvent } from 'react'
+import { useState, ChangeEvent, useEffect, KeyboardEvent, Dispatch, SetStateAction, FC } from 'react'
 import { Typography, Box, TextField, Card, CardActionArea, CardMedia, CardContent } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getGif } from '../../redux/actions/uiActions'
 import confetti from "canvas-confetti"
 import { updateWord } from '../../redux/actions/wordActions'
+import { IWord } from '../../interface'
 
-export const SpanishToEnglish = () => {
+interface Props {
+    words: IWord[],
+    position: number,
+    setPosition: Dispatch<SetStateAction<number>>
+}
+
+export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) => {
 
     const { currentGif } = useAppSelector(state => state.ui)
-    const { words } = useAppSelector(state => state.word)
     const dispatch = useAppDispatch()
 
 
     const [inputValue, setInpuValue] = useState('')
-    const [position, setPosition] = useState(0)
     const [help, setHelp] = useState(false)
 
 
@@ -52,46 +57,50 @@ export const SpanishToEnglish = () => {
     }
 
     useEffect(() => {
-        dispatch(getGif(words[position].english))
+        position !== words.length && dispatch(getGif(words[position].english))
     }, [position])
-
-
 
 
     return (
         <Box display='flex' padding={2} onKeyDown={onInputKeyDown}>
             <Box sx={{ margin: '0px auto', minWidth: 300, maxWidth: 800 }}>
-                <Card onClick={onClickHelp}>
-                    <CardActionArea sx={{ padding: 2 }}>
-                        <CardMedia
-                            component="img"
-                            height="400"
-                            image={currentGif}
-                            alt={words[position].english}
+                {position !== words.length ?
+                    <>
+                        <Card onClick={onClickHelp}>
+                            <CardActionArea sx={{ padding: 2 }}>
+                                <CardMedia
+                                    component="img"
+                                    height="400"
+                                    image={currentGif}
+                                    alt={words[position].english}
+                                />
+                                <CardContent>
+                                    <Typography fontWeight={help ? 200 : 400} variant="h5" component="h5">
+                                        {words[position].spanish} - {words[position].points}
+                                    </Typography>
+                                    {help &&
+                                        <Typography fontWeight={600} variant="h5" component="h5">
+                                            {words[position].english}
+                                        </Typography>
+                                    }
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+
+                        <TextField
+                            placeholder={`Traduce "${words[position].spanish}"`}
+                            value={inputValue}
+                            onChange={onInputChange}
+                            sx={{ marginTop: 2, width: '100%' }}
                         />
-                        <CardContent>
-                            <Typography fontWeight={help ? 200 : 400} variant="h5" component="h5">
-                                {words[position].spanish} - {words[position].points}
-                            </Typography>
-                            {help &&
-                                <Typography fontWeight={600} variant="h5" component="h5">
-                                    {words[position].english}
-                                </Typography>
-                            }
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
 
-                <TextField
-                    placeholder={`Traduce "${words[position].spanish}"`}
-                    value={inputValue}
-                    onChange={onInputChange}
-                    sx={{ marginTop: 2, width: '100%' }}
-                />
-
-                <Typography variant='body2' color="text.secondary" marginTop={2}>
-                    Si no la sabes, presiona la tecla "Enter" o haz clic en la imagen para ver la respuesta
-                </Typography>
+                        <Typography variant='body2' color="text.secondary" marginTop={2}>
+                            Si no la sabes, presiona la tecla "Enter" o haz clic en la imagen para ver la respuesta
+                        </Typography>
+                    </>
+                    :
+                    <h1>Felicitaciones</h1>
+                }
             </Box>
         </Box>
     )

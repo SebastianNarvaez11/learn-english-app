@@ -1,14 +1,24 @@
 import { useState } from 'react'
 import { NextPage } from 'next'
-import { Box, IconButton } from '@mui/material'
+import { Box, IconButton, LinearProgress } from '@mui/material'
 import KeyboardIcon from '@mui/icons-material/Keyboard';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { MainLayout } from '../../components/layouts'
 import { LevelOptions, SpanishToEnglish } from '../../components/vocabulary'
+import { useAppSelector } from '../../redux/hooks';
+import { getListForGame } from '../../utils';
 
 const VocabularyPage: NextPage = () => {
 
-  const [method, setMethod] = useState('escritura')
+  const { words } = useAppSelector(state => state.word)
+  const [position, setPosition] = useState(0)
+
+  const [method, setMethod] = useState('nivel')
+
+
+  const sort_words = getListForGame(words)
+  console.log(sort_words);
+  
 
   return (
     <MainLayout>
@@ -22,11 +32,15 @@ const VocabularyPage: NextPage = () => {
         </IconButton>
       </Box>
 
-      {method === 'escritura' && <SpanishToEnglish />}
+      <Box style={{ maxWidth: 500, margin: '0px auto' }}>
 
-      {method === 'nivel' && <LevelOptions />}
+        <LinearProgress variant="determinate" value={(position * 100 ) / sort_words.length} sx={{height: 10, borderRadius: 3}}/>
 
-      {/* TODO: HACER QUE DESDE ESTA PANTALLA SE MANEJAN LA PALABRAS Y PASARLAS COMO PROPS */}
+        {method === 'escritura' && <SpanishToEnglish words={sort_words} position={position} setPosition={setPosition} />}
+
+        {method === 'nivel' && <LevelOptions words={sort_words} position={position} setPosition={setPosition} />}
+      </Box>
+
 
 
     </MainLayout>

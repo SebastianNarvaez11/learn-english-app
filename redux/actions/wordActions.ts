@@ -23,7 +23,7 @@ export const updateWord = (id: string, english?: string, spanish?: string, point
 
     wordApi.put<IWord>(`words/${id}`, { english, spanish, points })
         .then(response => {
-            dispatch(update_word(response.data))
+            // dispatch(update_word(response.data))
         })
         .catch(error => {
             console.log(error);
