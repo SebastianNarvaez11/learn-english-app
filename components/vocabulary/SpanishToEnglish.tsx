@@ -5,6 +5,7 @@ import { getGif } from '../../redux/actions/uiActions'
 import confetti from "canvas-confetti"
 import { updateWord } from '../../redux/actions/wordActions'
 import { IWord } from '../../interface'
+import { add_word } from '../../redux/slices/wordSlice'
 
 interface Props {
     words: IWord[],
@@ -46,6 +47,10 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
         if (event.key === 'Enter' && help === false) {
             setHelp(true)
             dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points + 1))
+
+            if (position !== (words.length - 1)) {
+                dispatch(add_word(words[position]))
+            }
         }
     }
 
@@ -53,6 +58,10 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
         if (help === false) {
             setHelp(true)
             dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points + 1))
+            
+            if (position !== (words.length - 1)) {
+                dispatch(add_word(words[position]))
+            }
         }
     }
 
@@ -63,23 +72,23 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
 
     return (
         <Box display='flex' padding={2} onKeyDown={onInputKeyDown}>
-            <Box sx={{ margin: '0px auto', minWidth: 300, maxWidth: 800 }}>
+            <Box sx={{ margin: '0px auto', minWidth: 300, maxWidth: 300 }}>
                 {position !== words.length ?
                     <>
                         <Card onClick={onClickHelp}>
                             <CardActionArea sx={{ padding: 2 }}>
                                 <CardMedia
                                     component="img"
-                                    height="400"
+                                    height="200"
                                     image={currentGif}
                                     alt={words[position].english}
                                 />
                                 <CardContent>
-                                    <Typography fontWeight={help ? 200 : 400} variant="h5" component="h5">
-                                        {words[position].spanish} - {words[position].points}
+                                    <Typography align='center' fontWeight={help ? 200 : 400} variant="h5" component="h5">
+                                        {words[position].spanish} 
                                     </Typography>
                                     {help &&
-                                        <Typography fontWeight={600} variant="h5" component="h5">
+                                        <Typography align='center' fontWeight={600} variant="h5" component="h5">
                                             {words[position].english}
                                         </Typography>
                                     }

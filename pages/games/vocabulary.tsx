@@ -16,10 +16,6 @@ const VocabularyPage: NextPage = () => {
   const [method, setMethod] = useState('nivel')
 
 
-  const sort_words = getListForGame(words)
-  console.log(sort_words);
-  
-
   return (
     <MainLayout>
       <Box>
@@ -34,11 +30,11 @@ const VocabularyPage: NextPage = () => {
 
       <Box style={{ maxWidth: 500, margin: '0px auto' }}>
 
-        <LinearProgress variant="determinate" value={(position * 100 ) / sort_words.length} sx={{height: 10, borderRadius: 3}}/>
+        <LinearProgress variant="determinate" value={(position * 100 ) / words.length} sx={{height: 10, borderRadius: 3}}/>
 
-        {method === 'escritura' && <SpanishToEnglish words={sort_words} position={position} setPosition={setPosition} />}
+        {method === 'escritura' && <SpanishToEnglish words={words} position={position} setPosition={setPosition} />}
 
-        {method === 'nivel' && <LevelOptions words={sort_words} position={position} setPosition={setPosition} />}
+        {method === 'nivel' && <LevelOptions words={words} position={position} setPosition={setPosition} />}
       </Box>
 
 

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { MainLayout } from "../components/layouts";
-import { ListItem } from '../components/vocabulary';
+import { ListForLevel, ListItem } from '../components/vocabulary';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { useEffect } from 'react';
 import { fetchList } from '../redux/actions/listActions';
@@ -17,12 +17,20 @@ export default function Home() {
   }, [dispatch])
 
 
+
+  // TODO: cargar al inicio las listas sin popular las palabras
+  //       solo con las cantidades para saber cuantas tiene cada lista
+  //       contar en el backend cuantas son hard, medium y easy: response = {LISTAS: [], hard: number, medium: number, easy: number }
+  //       al hacer click en la lista se cargan las palabras populadas
+
+
   return (
     <MainLayout>
       {loadingLists ?
         <h1>Cargando Listas...</h1>
         :
         <>
+
           <Grid container>
             <Grid item xs={12} sm={6}>
               <Typography variant='h1' component='h1' fontSize={40} fontWeight={400} color='#494969'>Vocabulario</Typography>
@@ -42,11 +50,14 @@ export default function Home() {
             <Typography variant='h1' component='h1' fontSize={15} fontWeight={100} color='#494969'>Palabras aprendidas</Typography>
           </Box>
 
+          <ListForLevel />
 
-          <Grid container marginTop={5}>
+          <Typography variant='h1' component='h1' fontSize={20} fontWeight={100} color='#494969' marginTop={3}>Tus listas:</Typography>
+
+          <Grid container spacing={1} marginTop={1}>
             {lists.map(list => (
-              <Grid item xs={12} sm={6} md={4} lg={3}>
-                <ListItem list={list}/>
+              <Grid key={list._id} item xs={12} sm={6} md={4} lg={3}>
+                <ListItem list={list} />
               </Grid>
             ))}
           </Grid>

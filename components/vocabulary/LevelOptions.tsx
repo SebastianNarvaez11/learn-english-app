@@ -1,10 +1,10 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { useRouter } from 'next/router'
 import { Typography, Box, Card, CardActionArea, CardContent, Grid, Button } from '@mui/material'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { useAppDispatch } from '../../redux/hooks'
 import confetti from "canvas-confetti"
 import { updateWord } from '../../redux/actions/wordActions'
 import { IWord } from '../../interface'
+import { add_word } from '../../redux/slices/wordSlice'
 
 interface Props {
     words: IWord[],
@@ -23,19 +23,24 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
     }
 
     const onHard = () => {
-        dispatch(updateWord(words[position]._id, undefined, undefined, 2))
+        dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points + 2))
+        if (position !== (words.length - 1)) {
+            dispatch(add_word(words[position]))
+        }
+
         setHelp(false)
         setPosition(position + 1)
     }
 
     const onMedium = () => {
-        dispatch(updateWord(words[position]._id, undefined, undefined, 1))
+        dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points + 1))
         setPosition(position + 1)
         setHelp(false)
     }
 
     const onEasy = () => {
-        dispatch(updateWord(words[position]._id, undefined, undefined, 0))
+
+        dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points === 0 ? 0 : words[position].points - 1))
         setPosition(position + 1)
         setHelp(false)
     }
@@ -50,11 +55,11 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
                         <Card onClick={onClickHelp}>
                             <CardActionArea sx={{ padding: 2 }}>
                                 <CardContent>
-                                    <Typography fontWeight={help ? 200 : 400} variant="h1" component="h1">
+                                    <Typography align='center' fontWeight={help ? 200 : 400} variant="h1" component="h1">
                                         {words[position].english}
                                     </Typography>
                                     {help &&
-                                        <Typography fontWeight={600} variant="h5" component="h5">
+                                        <Typography align='center' fontWeight={600} variant="h5" component="h5">
                                             {words[position].spanish}
                                         </Typography>
                                     }

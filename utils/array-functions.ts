@@ -1,16 +1,14 @@
 import { IWord } from "../interface";
 
-export const getListForGame = (words: IWord[]) => {
-    const easy: IWord[] = []
-    const medium: IWord[] = []
-    const hard: IWord[] = []
 
-    words.map(word => {
-        if (word.points === 0) easy.push(word)
-        if (word.points === 1) medium.push(word)
-        if (word.points === 2) hard.push(word)
-    })
+export const disorderWords = (words: IWord[]) => {
 
-    const list: IWord[] = []
-    return list.concat(hard, hard, hard, medium, medium, easy)
+    for (let i = words.length - 1; i > 0; i--) {
+        let indiceAleatorio = Math.floor(Math.random() * (i + 1));
+        let temporal = words[i];
+        words[i] = words[indiceAleatorio];
+        words[indiceAleatorio] = temporal;
+    }
+
+    return words
 }

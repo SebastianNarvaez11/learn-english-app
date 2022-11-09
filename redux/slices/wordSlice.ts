@@ -31,9 +31,13 @@ export const wordSlice = createSlice({
 
         update_word: (state, action: PayloadAction<IWord>) => {
             state.words = state.words.map(word => word._id === action.payload._id ? word = action.payload : word)
+        },
+
+        add_word: (state, action: PayloadAction<IWord>) => {
+            state.words = [...state.words, action.payload]
         }
     }
 })
 
-export const { set_words, set_loading_words, update_word } = wordSlice.actions
+export const { set_words, set_loading_words, update_word, add_word } = wordSlice.actions
 export default wordSlice.reducer

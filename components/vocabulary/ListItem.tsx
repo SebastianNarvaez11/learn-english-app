@@ -4,6 +4,7 @@ import { FC } from 'react'
 import { IList } from '../../interface'
 import { useAppDispatch } from '../../redux/hooks'
 import { set_words } from '../../redux/slices/wordSlice'
+import { disorderWords} from '../../utils'
 
 
 interface Props {
@@ -16,7 +17,8 @@ export const ListItem: FC<Props> = ({ list }) => {
     const dispatch = useAppDispatch()
 
     const onSetWords = () => {
-        dispatch(set_words(list.words))
+        const words = disorderWords(Array.from(list.words))
+        dispatch(set_words(words))
         router.push('/games/vocabulary')
     }
 
