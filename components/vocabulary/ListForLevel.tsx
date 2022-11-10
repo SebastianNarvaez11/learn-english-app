@@ -1,9 +1,12 @@
 import { Box, Card, CardActionArea, CardContent, Grid, Typography } from '@mui/material'
+import { useAppSelector } from '../../redux/hooks'
 
 export const ListForLevel = () => {
 
 
-    
+    const { easy_words, hard_words, medium_words } = useAppSelector(state => state.word)
+
+
     return (
 
         <Box marginTop={2}>
@@ -21,7 +24,7 @@ export const ListForLevel = () => {
                                             Dificiles
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary">
-                                            30  Palabras
+                                            {hard_words}  Palabras
                                         </Typography>
                                     </CardContent>
                                 </Box>
@@ -43,7 +46,7 @@ export const ListForLevel = () => {
                                             Intermedias
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary">
-                                            30  Palabras
+                                            {medium_words}  Palabras
                                         </Typography>
                                     </CardContent>
                                 </Box>
@@ -65,7 +68,7 @@ export const ListForLevel = () => {
                                             Faciles
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary">
-                                            30  Palabras
+                                            {easy_words}  Palabras
                                         </Typography>
                                     </CardContent>
                                 </Box>

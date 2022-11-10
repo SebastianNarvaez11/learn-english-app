@@ -6,13 +6,19 @@ import { IWord } from "../../interface";
 
 export interface WordState {
     words: IWord[],
-    loadingWords: boolean
+    loadingWords: boolean,
+    hard_words: number,
+    medium_words: number,
+    easy_words: number
 }
 
 
 const initialState: WordState = {
     words: [],
-    loadingWords: true
+    loadingWords: true,
+    hard_words: 0,
+    medium_words: 0,
+    easy_words: 0
 }
 
 
@@ -35,9 +41,21 @@ export const wordSlice = createSlice({
 
         add_word: (state, action: PayloadAction<IWord>) => {
             state.words = [...state.words, action.payload]
+        },
+
+        set_hard_words: (state, action: PayloadAction<number>) => {
+            state.hard_words = action.payload
+        },
+
+        set_medium_words: (state, action: PayloadAction<number>) => {
+            state.medium_words = action.payload
+        },
+
+        set_easy_words: (state, action: PayloadAction<number>) => {
+            state.easy_words = action.payload
         }
     }
 })
 
-export const { set_words, set_loading_words, update_word, add_word } = wordSlice.actions
+export const { set_words, set_loading_words, update_word, add_word, set_easy_words, set_hard_words, set_medium_words } = wordSlice.actions
 export default wordSlice.reducer

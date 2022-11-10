@@ -1,4 +1,4 @@
-import { ITranslation, IList } from './../../../interface';
+import { ITranslation, IList, IListResponse } from './../../../interface';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from '../../../database'
 import { ListModel, WordModel } from '../../../models'
@@ -7,6 +7,7 @@ type Data =
     | { message: string }
     | IList
     | IList[]
+    | IListResponse
 
 
 
@@ -28,10 +29,13 @@ const getList = async (res: NextApiResponse<Data>) => {
 
     try {
         await db.connect()
-        const list: IList[] = await ListModel.find().populate('words')
+        const list: IList[] = await ListModel.find()
+        const hard: number = await WordModel.countDocuments({ points: { $gt: 3 } })
+        const medium: number = await WordModel.countDocuments({ points: { $gt: 0, $lt: 3 } })
+        const easy: number = await WordModel.countDocuments({ points: 0 })
         await db.disconnect()
 
-        res.status(200).json(list)
+        res.status(200).json({ list, hard, medium, easy })
     } catch (error) {
         console.log(error);
         await db.disconnect()
