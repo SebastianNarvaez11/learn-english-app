@@ -17,13 +17,6 @@ export default function Home() {
   }, [dispatch])
 
 
-
-  // TODO: cargar al inicio las listas sin popular las palabras
-  //       solo con las cantidades para saber cuantas tiene cada lista
-  //       contar en el backend cuantas son hard, medium y easy: response = {LISTAS: [], hard: number, medium: number, easy: number }
-  //       al hacer click en la lista se cargan las palabras populadas
-
-
   return (
     <MainLayout>
       {loadingLists ?

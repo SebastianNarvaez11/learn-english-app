@@ -1,5 +1,6 @@
 import { wordApi } from "../../apis";
-import { IWord } from "../../interface";
+import { IDifficulty, IWord } from "../../interface";
+import { disorderWords } from "../../utils";
 import { set_loading_words, set_words, update_word } from "../slices/wordSlice";
 import { AppDispatch } from "../store";
 
@@ -27,5 +28,22 @@ export const updateWord = (id: string, english?: string, spanish?: string, point
         })
         .catch(error => {
             console.log(error);
+        })
+}
+
+
+export const fetchWordsByDifficulty = (difficulty : IDifficulty) => (dispatch: AppDispatch) => {
+
+    dispatch(set_loading_words(true))
+
+    wordApi.get<IWord[]>(`words/difficulty/?difficulty=${difficulty}`)
+        .then(response => {
+            const words = disorderWords(Array.from(response.data))
+            dispatch(set_words(words))
+            dispatch(set_loading_words(false))
+        })
+        .catch(error => {
+            console.log(error);
+            dispatch(set_loading_words(false))
         })
 }

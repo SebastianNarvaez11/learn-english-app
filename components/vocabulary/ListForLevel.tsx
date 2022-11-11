@@ -1,10 +1,19 @@
+import { useRouter } from 'next/router'
 import { Box, Card, CardActionArea, CardContent, Grid, Typography } from '@mui/material'
-import { useAppSelector } from '../../redux/hooks'
+import { IDifficulty } from '../../interface'
+import { fetchWordsByDifficulty } from '../../redux/actions/wordActions'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 
 export const ListForLevel = () => {
 
-
+    const router = useRouter()
     const { easy_words, hard_words, medium_words } = useAppSelector(state => state.word)
+    const dispatch = useAppDispatch()
+
+    const onGetWords = (difficulty: IDifficulty) => {
+        dispatch(fetchWordsByDifficulty(difficulty))
+        router.push('/games/vocabulary')
+    }
 
 
     return (
@@ -12,7 +21,7 @@ export const ListForLevel = () => {
         <Box marginTop={2}>
             <Grid container spacing={4}>
                 <Grid item xs={12} sm={6} md={4}>
-                    <Card sx={{ maxWidth: 300, borderRadius: 3, backgroundColor: '#FBE6EC' }}>
+                    <Card sx={{ maxWidth: 300, borderRadius: 3, backgroundColor: '#FBE6EC' }} onClick={() => onGetWords('hard')}>
                         <CardActionArea>
                             <Box display='flex'>
                                 <Box flex={1} alignSelf="center">
@@ -34,7 +43,7 @@ export const ListForLevel = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={4}>
-                    <Card sx={{ maxWidth: 300, borderRadius: 3, backgroundColor: '#EBF3FC' }}>
+                    <Card sx={{ maxWidth: 300, borderRadius: 3, backgroundColor: '#EBF3FC' }} onClick={() => onGetWords('medium')}>
                         <CardActionArea>
                             <Box display='flex'>
                                 <Box flex={1} alignSelf="center">
@@ -56,7 +65,7 @@ export const ListForLevel = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={4}>
-                    <Card sx={{ maxWidth: 300, borderRadius: 3 }}>
+                    <Card sx={{ maxWidth: 300, borderRadius: 3 }} onClick={() => onGetWords('easy')}>
                         <CardActionArea>
                             <Box display='flex'>
                                 <Box flex={1} alignSelf="center">

@@ -1,7 +1,8 @@
 import { wordApi } from '../../apis';
 import { IList, IListResponse, ITranslation } from '../../interface';
+import { disorderWords } from '../../utils';
 import { add_list, set_list, set_loading_lists } from '../slices/listSlice';
-import { set_easy_words, set_hard_words, set_medium_words } from '../slices/wordSlice';
+import { set_easy_words, set_hard_words, set_loading_words, set_medium_words, set_words } from '../slices/wordSlice';
 import { AppDispatch } from './../store';
 
 
@@ -31,5 +32,23 @@ export const createList = (name: string, icon: string, words: ITranslation[], ro
         })
         .catch(error => {
             console.log(error);
+        })
+}
+
+
+
+export const getList = (id: string) => (dispatch: AppDispatch) => {
+
+    dispatch(set_loading_words(true))
+
+    wordApi.get<IList>(`lists/${id}`)
+        .then(response => {
+            const words = disorderWords(Array.from(response.data.words))
+            dispatch(set_words(words))
+            dispatch(set_loading_words(false))
+        })
+        .catch(error => {
+            console.log(error);
+            dispatch(set_loading_words(false))
         })
 }

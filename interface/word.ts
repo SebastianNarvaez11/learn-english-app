@@ -24,3 +24,6 @@ export interface ITranslation {
     spanish: string,
     english: string,
 }
+
+
+export type IDifficulty = "hard" | "medium" | "easy"

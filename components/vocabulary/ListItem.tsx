@@ -2,6 +2,7 @@ import { Card, CardActionArea, Box, Typography, CardContent } from '@mui/materia
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 import { IList } from '../../interface'
+import { getList } from '../../redux/actions/listActions'
 import { useAppDispatch } from '../../redux/hooks'
 import { set_words } from '../../redux/slices/wordSlice'
 import { disorderWords} from '../../utils'
@@ -16,14 +17,13 @@ export const ListItem: FC<Props> = ({ list }) => {
     const router = useRouter()
     const dispatch = useAppDispatch()
 
-    const onSetWords = () => {
-        const words = disorderWords(Array.from(list.words))
-        dispatch(set_words(words))
+    const onGetList = () => {
+        dispatch(getList(list._id))
         router.push('/games/vocabulary')
     }
 
     return (
-        <Card sx={{ maxWidth: 300, borderRadius: 3 }} onClick={onSetWords}>
+        <Card sx={{ maxWidth: 300, borderRadius: 3 }} onClick={onGetList}>
             <CardActionArea>
                 <Box display='flex'>
                     <Box flex={1} alignSelf="center">
