@@ -1,9 +1,9 @@
 export interface IList {
-    _id: string,
+    _id?: string,
     name: string,
     icon: string,
     words: IWord[],
-    createdAt: number
+    createdAt?: number
 }
 
 export interface IListResponse {
@@ -14,9 +14,10 @@ export interface IListResponse {
 }
 
 export interface IWord {
-    _id: string,
+    _id?: string,
     spanish: string,
     english: string,
+    image?: string,
     points: number
 }
 

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db, seedData } from '../../database'
-import { WordModel } from '../../models'
+import { ListModel, WordModel } from '../../models'
 
 type Data =
     | { message: string }
@@ -14,8 +14,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     try {
         await db.connect()
+
+        await ListModel.deleteMany()
         await WordModel.deleteMany()
-        await WordModel.insertMany(seedData.words)
+
+        await Promise.all(
+            seedData.lists.map(async list => {
+                const { name, icon, words } = list
+
+                const new_list = new ListModel({ name, icon })
+                await new_list.save()
+
+                const new_words = await WordModel.insertMany(words)
+                await ListModel.findByIdAndUpdate(new_list._id, { words: new_words })
+            })
+        )
         await db.disconnect()
 
         res.status(200).json({ message: 'Proceso realizado correctamente' })

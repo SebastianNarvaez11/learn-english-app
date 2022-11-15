@@ -6,6 +6,7 @@ import confetti from "canvas-confetti"
 import { updateWord } from '../../redux/actions/wordActions'
 import { IWord } from '../../interface'
 import { add_word } from '../../redux/slices/wordSlice'
+import { ShowImage } from './ShowImage'
 
 interface Props {
     words: IWord[],
@@ -15,7 +16,6 @@ interface Props {
 
 export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) => {
 
-    const { currentGif } = useAppSelector(state => state.ui)
     const dispatch = useAppDispatch()
 
 
@@ -46,7 +46,7 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
     const onInputKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'Enter' && help === false) {
             setHelp(true)
-            dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points + 1))
+            dispatch(updateWord(words[position]._id!, undefined, undefined, words[position].points + 1))
 
             if (position !== (words.length - 1)) {
                 dispatch(add_word(words[position]))
@@ -57,17 +57,13 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
     const onClickHelp = () => {
         if (help === false) {
             setHelp(true)
-            dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points + 1))
-            
+            dispatch(updateWord(words[position]._id!, undefined, undefined, words[position].points + 1))
+
             if (position !== (words.length - 1)) {
                 dispatch(add_word(words[position]))
             }
         }
     }
-
-    useEffect(() => {
-        position !== words.length && dispatch(getGif(words[position].english))
-    }, [position])
 
 
     return (
@@ -77,15 +73,12 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
                     <>
                         <Card onClick={onClickHelp}>
                             <CardActionArea sx={{ padding: 2 }}>
-                                <CardMedia
-                                    component="img"
-                                    height="200"
-                                    image={currentGif}
-                                    alt={words[position].english}
-                                />
+
+                                <ShowImage word={words[position]} nextImageCome={position !== words.length}/>
+                                
                                 <CardContent>
                                     <Typography align='center' fontWeight={help ? 200 : 400} variant="h5" component="h5">
-                                        {words[position].spanish} 
+                                        {words[position].spanish}
                                     </Typography>
                                     {help &&
                                         <Typography align='center' fontWeight={600} variant="h5" component="h5">

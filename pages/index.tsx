@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { MainLayout } from "../components/layouts";
-import { ListForLevel, ListItem } from '../components/vocabulary';
+import { ListByLevel, ListCard } from '../components/vocabulary';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { useEffect } from 'react';
 import { fetchList } from '../redux/actions/listActions';
@@ -43,14 +43,14 @@ export default function Home() {
             <Typography variant='h1' component='h1' fontSize={15} fontWeight={100} color='#494969'>Palabras aprendidas</Typography>
           </Box>
 
-          <ListForLevel />
+          <ListByLevel />
 
           <Typography variant='h1' component='h1' fontSize={20} fontWeight={100} color='#494969' marginTop={3}>Tus listas:</Typography>
 
           <Grid container spacing={1} marginTop={1}>
             {lists.map(list => (
               <Grid key={list._id} item xs={12} sm={6} md={4} lg={3}>
-                <ListItem list={list} />
+                <ListCard list={list} />
               </Grid>
             ))}
           </Grid>

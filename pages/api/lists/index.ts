@@ -29,8 +29,11 @@ const getList = async (res: NextApiResponse<Data>) => {
 
     try {
         await db.connect()
-        const list: IList[] = await ListModel.find()
-        const hard: number = await WordModel.countDocuments({ points: { $gt: 2 } }) // mayores que 2
+
+        const list: IList[] = await ListModel.find().sort({ name: 'ascending' })
+            .populate({ path: 'words', select: 'points' })
+
+        const hard: number = await WordModel.countDocuments({ points: { $gt: 3 } }) // mayores que 3
         const medium: number = await WordModel.countDocuments({ points: { $gt: 0, $lt: 3 } }) // entre 1 y 2
         const easy: number = await WordModel.countDocuments({ points: 0 })
         await db.disconnect()

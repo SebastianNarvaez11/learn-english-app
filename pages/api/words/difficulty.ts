@@ -40,7 +40,7 @@ const getWordsByDifficulty = async (req: NextApiRequest, res: NextApiResponse<Da
 
             case 'hard':
                 await db.connect()
-                const hard_words = await WordModel.find({ points: { $gt: 2 } }) // mayores que 2
+                const hard_words = await WordModel.find({ points: { $gt: 3 } }) // mayores que 3
                 await db.disconnect()
                 return res.status(200).json(hard_words)
 

@@ -5,6 +5,7 @@ import confetti from "canvas-confetti"
 import { updateWord } from '../../redux/actions/wordActions'
 import { IWord } from '../../interface'
 import { add_word } from '../../redux/slices/wordSlice'
+import { ShowImage } from './ShowImage'
 
 interface Props {
     words: IWord[],
@@ -23,7 +24,7 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
     }
 
     const onHard = () => {
-        dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points + 2))
+        dispatch(updateWord(words[position]._id!, undefined, undefined, words[position].points + 2))
         if (position !== (words.length - 1)) {
             dispatch(add_word(words[position]))
         }
@@ -38,7 +39,7 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
     }
 
     const onEasy = () => {
-        dispatch(updateWord(words[position]._id, undefined, undefined, words[position].points === 0 ? 0 : words[position].points - 1))
+        dispatch(updateWord(words[position]._id!, undefined, undefined, words[position].points === 0 ? 0 : words[position].points - 1))
         setPosition(position + 1)
         setHelp(false)
     }
@@ -52,6 +53,7 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
                     <>
                         <Card onClick={onClickHelp}>
                             <CardActionArea sx={{ padding: 2 }}>
+                                {/* <ShowImage word={words[position]} nextImageCome={position !== words.length} /> */}
                                 <CardContent>
                                     <Typography align='center' fontWeight={help ? 200 : 400} variant="h1" component="h1">
                                         {words[position].english}

@@ -4,7 +4,7 @@ import { IDifficulty } from '../../interface'
 import { fetchWordsByDifficulty } from '../../redux/actions/wordActions'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 
-export const ListForLevel = () => {
+export const ListByLevel = () => {
 
     const router = useRouter()
     const { easy_words, hard_words, medium_words } = useAppSelector(state => state.word)
