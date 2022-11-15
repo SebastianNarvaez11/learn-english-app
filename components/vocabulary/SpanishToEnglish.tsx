@@ -27,6 +27,9 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
         setInpuValue(event.target.value)
 
         if (event.target.value === words[position].english) {
+            if (help === false) {
+                dispatch(updateWord(words[position]._id!, undefined, undefined, words[position].points === 0 ? 0 : words[position].points - 1))
+            }
             setPosition(position + 1)
             setInpuValue('')
             setHelp(false)
@@ -74,8 +77,8 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
                         <Card onClick={onClickHelp}>
                             <CardActionArea sx={{ padding: 2 }}>
 
-                                <ShowImage word={words[position]} nextImageCome={position !== words.length}/>
-                                
+                                <ShowImage word={words[position]} nextImageCome={position !== words.length} />
+
                                 <CardContent>
                                     <Typography align='center' fontWeight={help ? 200 : 400} variant="h5" component="h5">
                                         {words[position].spanish}
