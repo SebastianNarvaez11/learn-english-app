@@ -19,7 +19,7 @@ export const ShowImage: FC<Props> = ({word, nextImageCome}) => {
         if (nextImageCome) {
             word.image === '' && dispatch(getGif(word.english))
         }
-    }, [nextImageCome])
+    }, [word, nextImageCome])
 
 
     return (
