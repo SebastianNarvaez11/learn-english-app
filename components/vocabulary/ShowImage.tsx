@@ -14,12 +14,12 @@ export const ShowImage: FC<Props> = ({word, nextImageCome}) => {
     const {currentGif} = useAppSelector(state => state.ui)
     const dispatch = useAppDispatch()
 
-    
+
     useEffect(() => {
         if (nextImageCome) {
             word.image === '' && dispatch(getGif(word.english))
         }
-    }, [nextImageCome])
+    }, [word, nextImageCome])
 
 
     return (

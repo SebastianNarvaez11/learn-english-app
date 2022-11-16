@@ -27,7 +27,7 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
         setInpuValue(event.target.value)
 
         if (event.target.value === words[position].english) {
-            if (help === false) {
+            if (help === false && words.filter(word => word._id === words[position]._id!).length === 1) {
                 dispatch(updateWord(words[position]._id!, undefined, undefined, words[position].points === 0 ? 0 : words[position].points - 1))
             }
             setPosition(position + 1)

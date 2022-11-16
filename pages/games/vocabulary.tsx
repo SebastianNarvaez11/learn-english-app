@@ -12,7 +12,7 @@ const VocabularyPage: NextPage = () => {
   const { words, isLoadingWords } = useAppSelector(state => state.word)
   const [position, setPosition] = useState(0)
 
-  const [method, setMethod] = useState('nivel')
+  const [method, setMethod] = useState('escritura')
 
 
   return (
