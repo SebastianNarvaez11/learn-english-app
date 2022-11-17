@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect, KeyboardEvent, Dispatch, SetStateAction, FC } from 'react'
-import { Typography, Box, TextField, Card, CardActionArea, CardMedia, CardContent } from '@mui/material'
+import { Typography, Box, TextField, Card, CardActionArea, CardMedia, CardContent, FormControlLabel, Switch } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { getGif } from '../../redux/actions/uiActions'
 import confetti from "canvas-confetti"
@@ -21,6 +21,7 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
 
     const [inputValue, setInpuValue] = useState('')
     const [help, setHelp] = useState(false)
+    const [showText, setShowText] = useState(true)
 
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -80,9 +81,12 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
                                 <ShowImage word={words[position]} nextImageCome={position !== words.length} />
 
                                 <CardContent>
-                                    <Typography align='center' fontWeight={help ? 200 : 400} variant="h5" component="h5">
-                                        {words[position].spanish}
-                                    </Typography>
+                                    {showText &&
+                                        <Typography align='center' fontWeight={help ? 200 : 400} variant="h5" component="h5">
+                                            {words[position].spanish}
+                                        </Typography>
+                                    }
+
                                     {help &&
                                         <Typography align='center' fontWeight={600} variant="h5" component="h5">
                                             {words[position].english}
@@ -92,12 +96,18 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
                             </CardActionArea>
                         </Card>
 
+
+
+
                         <TextField
                             placeholder={`Traduce "${words[position].spanish}"`}
+                            autoComplete='off'
                             value={inputValue}
                             onChange={onInputChange}
                             sx={{ marginTop: 2, width: '100%' }}
                         />
+
+                        <FormControlLabel control={<Switch checked={showText} onClick={() => setShowText(!showText)} />} label="Mostrar texto de la imagen" />
 
                         <Typography variant='body2' color="text.secondary" marginTop={2}>
                             Si no la sabes, presiona la tecla "Enter" o haz clic en la imagen para ver la respuesta
