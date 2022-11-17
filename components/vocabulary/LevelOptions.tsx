@@ -34,6 +34,9 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
     }
 
     const onMedium = () => {
+        if(words[position].points === 0){
+            dispatch(updateWord(words[position]._id!, undefined, undefined, words[position].points + 1))
+        }
         setPosition(position + 1)
         setHelp(false)
     }
