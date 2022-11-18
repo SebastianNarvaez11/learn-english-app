@@ -19,7 +19,7 @@ export const CardImage: FC<Props> = ({word, nextImageCome}) => {
         if (nextImageCome) {
             word.image === '' && dispatch(getGif(word.english))
         }
-    }, [word, nextImageCome])
+    }, [word, nextImageCome, dispatch])
 
 
     return (

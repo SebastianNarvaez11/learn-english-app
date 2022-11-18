@@ -54,7 +54,7 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
             w.lang = 'en-EN'
             speechSynthesis.speak(w)
         }
-    }, [position])
+    }, [position, words])
 
 
     const listenWord = () => {

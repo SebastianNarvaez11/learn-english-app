@@ -117,7 +117,7 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
                         <FormControlLabel control={<Switch checked={showImage} onClick={() => setShowImage(!showImage)} />} label="Mostrar imagen" />
 
                         <Typography variant='body2' color="text.secondary" marginTop={2}>
-                            Si no la sabes, presiona la tecla "Enter" o haz clic en la imagen para ver la respuesta
+                            Si no la sabes, presiona la tecla Enter o haz clic en la imagen para ver la respuesta
                         </Typography>
                     </>
                     :

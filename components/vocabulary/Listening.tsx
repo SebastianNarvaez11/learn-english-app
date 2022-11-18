@@ -61,15 +61,15 @@ export const Listening: FC<Props> = ({ words, position, setPosition }) => {
     useEffect(() => {
         if (position !== words.length) {
             let w = new SpeechSynthesisUtterance(words[position].english)
-            w.lang = 'en-EN'
+            w.lang = "en-EN"
             speechSynthesis.speak(w)
         }
-    }, [position])
+    }, [position, words])
 
 
     const listenWord = () => {
         let w = new SpeechSynthesisUtterance(words[position].english)
-        w.lang = 'en-EN'
+        w.lang = "en-EN"
         speechSynthesis.speak(w)
     }
 
@@ -97,7 +97,7 @@ export const Listening: FC<Props> = ({ words, position, setPosition }) => {
                         />
 
                         <Typography variant='body2' color="text.secondary" marginTop={2}>
-                            Si no la sabes, presiona la tecla "Enter" o haz clic en la imagen para ver la respuesta
+                            Si no la sabes, presiona la tecla Enter o haz clic en la imagen para ver la respuesta
                         </Typography>
                     </>
                     :

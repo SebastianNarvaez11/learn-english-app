@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { useFormik } from 'formik';
-import { Grid, Box, Typography, TextField, Button, List, ListCard, ListCardButton, ListCardIcon, ListCardText } from '@mui/material'
+import { Grid, Box, Typography, TextField, Button, List, Card, ListItemButton, ListItemText, ListItemIcon, ListItem} from '@mui/material'
 import DoneIcon from '@mui/icons-material/Done';
 import { EmojiClickData } from 'emoji-picker-react';
 import { MainLayout } from '../components/layouts'
@@ -99,19 +99,19 @@ const CreateListPage: NextPage = () => {
 
                         <List>
                             {words.map(word => (
-                                <ListCard disablePadding key={word.english}>
-                                    <ListCardButton>
-                                        <ListCardIcon>
+                                <ListItem  disablePadding key={word.english}>
+                                    <ListItemButton>
+                                        <ListItemIcon>
                                             <DoneIcon />
-                                        </ListCardIcon>
-                                        <ListCardText>
+                                        </ListItemIcon>
+                                        <ListItemText >
                                             {word.english}
-                                        </ListCardText>
-                                        <ListCardText>
+                                        </ListItemText >
+                                        <ListItemText >
                                             {word.spanish}
-                                        </ListCardText>
-                                    </ListCardButton>
-                                </ListCard>
+                                        </ListItemText >
+                                    </ListItemButton>
+                                </ListItem>
                             ))}
                         </List>
                     </Grid>

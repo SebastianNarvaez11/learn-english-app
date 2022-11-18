@@ -10,7 +10,7 @@ interface Props {
     list: IList
 }
 
-export const ListCard: FC<Props> = ({ list }) => {
+export const CartItemList: FC<Props> = ({ list }) => {
 
     const router = useRouter()
     const dispatch = useAppDispatch()
