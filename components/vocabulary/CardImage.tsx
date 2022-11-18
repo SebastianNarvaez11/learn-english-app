@@ -9,7 +9,7 @@ interface Props {
     nextImageCome: boolean
 }
 
-export const ShowImage: FC<Props> = ({word, nextImageCome}) => {
+export const CardImage: FC<Props> = ({word, nextImageCome}) => {
 
     const {currentGif} = useAppSelector(state => state.ui)
     const dispatch = useAppDispatch()

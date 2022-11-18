@@ -1,11 +1,12 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { Typography, Box, Card, CardActionArea, CardContent, Grid, Button } from '@mui/material'
+import { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react'
+import { Typography, Box, Card, CardActionArea, CardContent, Grid, Button, IconButton } from '@mui/material'
+import SoundIcon from '@mui/icons-material/GraphicEq';
 import { useAppDispatch } from '../../redux/hooks'
 import confetti from "canvas-confetti"
 import { updateWord } from '../../redux/actions/wordActions'
 import { IWord } from '../../interface'
 import { add_word } from '../../redux/slices/wordSlice'
-import { ShowImage } from './ShowImage'
+import { CardImage } from './CardImage'
 
 interface Props {
     words: IWord[],
@@ -34,7 +35,7 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
     }
 
     const onMedium = () => {
-        if(words[position].points === 0){
+        if (words[position].points === 0) {
             dispatch(updateWord(words[position]._id!, undefined, undefined, words[position].points + 1))
         }
         setPosition(position + 1)
@@ -47,6 +48,20 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
         setHelp(false)
     }
 
+    useEffect(() => {
+        if (position !== words.length) {
+            let w = new SpeechSynthesisUtterance(words[position].english)
+            w.lang = 'en-EN'
+            speechSynthesis.speak(w)
+        }
+    }, [position])
+
+
+    const listenWord = () => {
+        let w = new SpeechSynthesisUtterance(words[position].english)
+        w.lang = 'en-EN'
+        speechSynthesis.speak(w)
+    }
 
     return (
         <Box display='flex' padding={2}>
@@ -56,7 +71,7 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
                     <>
                         <Card onClick={onClickHelp}>
                             <CardActionArea sx={{ padding: 2 }}>
-                                {/* <ShowImage word={words[position]} nextImageCome={position !== words.length} /> */}
+                                {/* <CardImage word={words[position]} nextImageCome={position !== words.length} /> */}
                                 <CardContent>
                                     <Typography align='center' fontWeight={help ? 200 : 400} variant="h1" component="h1">
                                         {words[position].english}
@@ -70,7 +85,11 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
                             </CardActionArea>
                         </Card>
 
-                        <Grid container marginTop={2} spacing={1}>
+                        <IconButton onClick={listenWord} color="success" sx={{ marginTop: 2}}>
+                            <SoundIcon />
+                        </IconButton>
+
+                        <Grid container marginTop={1} spacing={1}>
                             <Grid item xs={12} sm={4}>
                                 <Button fullWidth color='error' variant="contained" onClick={onHard}>
                                     Dificil

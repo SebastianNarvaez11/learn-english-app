@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, useEffect, KeyboardEvent, Dispatch, SetStateAction, FC } from 'react'
 import { Typography, Box, TextField, Card, CardActionArea, CardMedia, CardContent, FormControlLabel, Switch, IconButton } from '@mui/material'
+import SoundIcon from '@mui/icons-material/GraphicEq';
 import { useAppDispatch } from '../../redux/hooks'
 import { getGif } from '../../redux/actions/uiActions'
 import confetti from "canvas-confetti"
@@ -14,15 +15,13 @@ interface Props {
     setPosition: Dispatch<SetStateAction<number>>
 }
 
-export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) => {
+export const Listening: FC<Props> = ({ words, position, setPosition }) => {
 
     const dispatch = useAppDispatch()
 
 
     const [inputValue, setInpuValue] = useState('')
     const [help, setHelp] = useState(false)
-    const [showText, setShowText] = useState(true)
-    const [showImage, setShowImage] = useState(true)
 
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +32,6 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
                 dispatch(updateWord(words[position]._id!, undefined, undefined, words[position].points === 0 ? 0 : words[position].points - 1))
             }
             setPosition(position + 1)
-            listenWord()
             setInpuValue('')
             setHelp(false)
             confetti({
@@ -60,16 +58,13 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
         }
     }
 
-    const onClickHelp = () => {
-        if (help === false) {
-            setHelp(true)
-            dispatch(updateWord(words[position]._id!, undefined, undefined, words[position].points + 1))
-
-            if (position !== (words.length - 1)) {
-                dispatch(add_word(words[position]))
-            }
+    useEffect(() => {
+        if (position !== words.length) {
+            let w = new SpeechSynthesisUtterance(words[position].english)
+            w.lang = 'en-EN'
+            speechSynthesis.speak(w)
         }
-    }
+    }, [position])
 
 
     const listenWord = () => {
@@ -80,41 +75,26 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
 
     return (
         <Box display='flex' padding={2} onKeyDown={onInputKeyDown}>
-            <Box sx={{ margin: '0px auto', minWidth: 300, maxWidth: 300 }}>
+            <Box display='flex' flexDirection='column' sx={{ margin: '0px auto', minWidth: 300, maxWidth: 300 }}>
                 {position !== words.length ?
                     <>
-                        <Card onClick={onClickHelp}>
-                            <CardActionArea sx={{ padding: 2 }}>
+                        <IconButton onClick={listenWord} color="success" sx={{ marginTop: 2, height: 40}} size="large" >
+                            <SoundIcon/>
+                        </IconButton>
 
-                                {showImage && <CardImage word={words[position]} nextImageCome={position !== words.length} />}
-
-                                <CardContent>
-                                    {showText &&
-                                        <Typography align='center' fontWeight={help ? 200 : 400} variant="h5" component="h5">
-                                            {words[position].spanish}
-                                        </Typography>
-                                    }
-
-                                    {help &&
-                                        <Typography align='center' fontWeight={600} variant="h5" component="h5">
-                                            {words[position].english}
-                                        </Typography>
-                                    }
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
-
+                        {help &&
+                            <Typography align='center' fontWeight={600} variant="h5" component="h5">
+                                {words[position].english}
+                            </Typography>
+                        }
 
                         <TextField
-                            placeholder={showText ? `Traduce "${words[position].spanish}"` : "Que entiendes?"}
+                            placeholder={"Que entiendes?"}
                             autoComplete='off'
                             value={inputValue}
                             onChange={onInputChange}
                             sx={{ marginTop: 2, width: '100%' }}
                         />
-
-                        <FormControlLabel control={<Switch checked={showText} onClick={() => setShowText(!showText)} />} label="Mostrar texto" />
-                        <FormControlLabel control={<Switch checked={showImage} onClick={() => setShowImage(!showImage)} />} label="Mostrar imagen" />
 
                         <Typography variant='body2' color="text.secondary" marginTop={2}>
                             Si no la sabes, presiona la tecla "Enter" o haz clic en la imagen para ver la respuesta

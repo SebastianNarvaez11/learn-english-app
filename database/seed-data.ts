@@ -129,7 +129,7 @@ const lists: IList[] = [
             { english: "remain", spanish: "permanecer - quedarse", points: 3, image: " https://i.giphy.com/media/XEo7YJHUeplXa/200w.webp" },
             { english: "sigh", spanish: "suspirar - susurrar", points: 3, image: " https://i.giphy.com/media/UUcVHqcMwWMcUoNmSN/200w.webp" },
             { english: "vacuum", spanish: "aspirar", points: 3, image: " https://i.giphy.com/media/cSw9SQuGRjvr2/200w.webp" },
-            { english: "mind", spanish: "agregar - importar - preocuparse", points: 3, image: " https://i.giphy.com/media/ZCqUyl4FbVYqO3xZBW/200w.webp" },
+            { english: "mind", spanish: "importar - preocuparse", points: 3, image: " https://i.giphy.com/media/ZCqUyl4FbVYqO3xZBW/200w.webp" },
             { english: "happen", spanish: "suceder - ocurrir - pasar", points: 3, image: " https://i.giphy.com/media/1lxT4sT6Grek6Ma6mW/200w.webp" },
             { english: "cry", spanish: "llorar - gritar", points: 3, image: " https://i.giphy.com/media/3o6wrvdHFbwBrUFenu/200w.webp" },
             { english: "imitate", spanish: "imitar", points: 3, image: " https://i.giphy.com/media/3orifcQSbDdACie0Y8/200w.webp" },
