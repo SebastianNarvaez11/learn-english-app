@@ -1,7 +1,19 @@
 services:
-  learnenglishapp:
+  next:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: next
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - database
+
+  database:
     image: mongo:5.0.0
-    container_name: learn-english-app
+    container_name: database
     ports:
       - 27017:27017
     volumes:

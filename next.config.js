@@ -4,7 +4,8 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ['media4.giphy.com', 'https://images.unsplash.com']
-  }
+  },
+  output : 'standalone'
 }
 
 module.exports = nextConfig
