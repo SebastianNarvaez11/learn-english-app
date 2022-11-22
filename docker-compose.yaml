@@ -1,17 +1,14 @@
-version: '3'
+version: '3.9'
 
 services:
-  next-app:
+  web:
     image: learn-english
-    container_name: app
-    build: 
+    container_name: web
+    build:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
-    environment:
-      - MONGO_URL=mongodb://database:27017/database
-
-
+    
 
   database:
     image: mongo:5.0.0
