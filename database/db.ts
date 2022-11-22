@@ -28,9 +28,9 @@ export const connect = async () => {
         await mongoose.disconnect();
     }
 
-    await mongoose.connect(process.env.MONGO_URL || '');
+    await mongoose.connect('mongodb+srv://english-admin:jTGcVHBOP8WL7oOh@cluster0.ol00val.mongodb.net/database' || '');
     mongoConnection.isConnected = 1;
-    console.log('Conectado a MongoDB:', process.env.MONGO_URL);
+    console.log('Conectado a MongoDB:', 'mongodb+srv://english-admin:jTGcVHBOP8WL7oOh@cluster0.ol00val.mongodb.net/database');
 }
 
 export const disconnect = async () => {
