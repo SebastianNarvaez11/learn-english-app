@@ -67,7 +67,7 @@ const lists: IList[] = [
             { english: "cancel", spanish: "cancelar", points: 0, image: " https://i.giphy.com/media/l4FGlqf3GnH6mXY08/200w.webp" },
             { english: "pronounce", spanish: "pronunciar", points: 0, image: " https://i.giphy.com/media/l2JdZtmjxPJ2M1d9C/200w.webp" },
             { english: "describe", spanish: "describir", points: 0, image: " https://i.giphy.com/media/STLj8QUhg25pe/200w.webp" },
-            { english: "listen to", spanish: "escuchar", points: 0, image: " https://i.giphy.com/media/4oMoIbIQrvCjm/200w.webp" },
+            { english: "listen", spanish: "escuchar", points: 0, image: " https://i.giphy.com/media/4oMoIbIQrvCjm/200w.webp" },
             { english: "fill", spanish: "llenar - rellenar", points: 0, image: " https://i.giphy.com/media/xT9IgFQsNYi1zBUiyc/200w.webp" },
             { english: "discuss", spanish: "discutir", points: 0, image: " https://i.giphy.com/media/kSacoMuLSoNTfInwsB/200w.webp" },
             { english: "splash", spanish: "salpicar - rociar", points: 0, image: " https://i.giphy.com/media/iNZffK78WQ0LF3ZWLb/200w.webp" },
