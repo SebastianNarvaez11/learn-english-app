@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from '../../../database'
 import { IList } from '../../../interface'
 import { ListModel } from '../../../models'
-import { selectIdealWords } from '../../../utils'
+import { selectIdealWords, disorderWords } from '../../../utils'
 
 type Data =
     | { message: string }
@@ -23,12 +23,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 const getListById = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-    const { id } = req.query
+    const { id, complete} = req.query 
 
     try {
         await db.connect()
         const list = await ListModel.findById(id).populate('words')
         await db.disconnect()
+
+        if(complete === 'true'){
+            list!.words = disorderWords(list!.words)
+            return res.status(200).json(list!)
+        }
 
         list!.words = selectIdealWords(list?.words!)
         return res.status(200).json(list!)

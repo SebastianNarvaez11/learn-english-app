@@ -37,11 +37,11 @@ export const createList = (name: string, icon: string, words: ITranslation[], ro
 
 
 
-export const getList = (id: string) => (dispatch: AppDispatch) => {
+export const getList = (id: string, complete: boolean = false) => (dispatch: AppDispatch) => {
 
     dispatch(set_loading_words(true))
 
-    wordApi.get<IList>(`lists/${id}`)
+    wordApi.get<IList>(`lists/${id}/?complete=${complete}`)
         .then(response => {
             const words = disorderWords(Array.from(response.data.words))
             dispatch(set_words(words))
