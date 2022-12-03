@@ -230,8 +230,6 @@ const lists: IList[] = [
         name: "5. Verbos Regulares",
         icon: "🏇",
         words: [
-            { english: "fail", spanish: "fallar - fracasar - perder", points: 0, image: " https://i.giphy.com/media/KvTuvZjYiERHy/200w.webp" },
-            { english: "broil", spanish: "asar", points: 0, image: " https://i.giphy.com/media/DC3KWIx4iQXf1ga9o7/200w.webp" },
             { english: "land", spanish: "aterrizar - desembarcar", points: 3, image: " https://i.giphy.com/media/sDn8Wv2gIDDl3B99d2/200w.webp" },
             { english: "trust", spanish: "confiar - creer", points: 3, image: " https://i.giphy.com/media/ZzScEDPMnJFp6/200w.webp" },
             { english: "pick up", spanish: "recoger", points: 3, image: " https://i.giphy.com/media/bocdFeJKj8axPinbsD/200w.webp" },
