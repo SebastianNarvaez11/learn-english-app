@@ -103,8 +103,7 @@ export const SpanishToEnglish: FC<Props> = ({ words, position, setPosition }) =>
                                 </CardContent>
                             </CardActionArea>
                         </Card>
-
-
+                        
                         <TextField
                             placeholder={showText ? `Traduce "${words[position].spanish}"` : "Que entiendes?"}
                             autoComplete='off'

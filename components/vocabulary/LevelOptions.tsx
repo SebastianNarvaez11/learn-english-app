@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react'
-import { Typography, Box, Card, CardActionArea, CardContent, Grid, Button, IconButton } from '@mui/material'
+import { Typography, Box, Card, CardActionArea, CardContent, Grid, Button, IconButton, FormControlLabel, Switch } from '@mui/material'
 import SoundIcon from '@mui/icons-material/GraphicEq';
 import { useAppDispatch } from '../../redux/hooks'
 import confetti from "canvas-confetti"
@@ -19,6 +19,7 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
     const dispatch = useAppDispatch()
 
     const [help, setHelp] = useState(false)
+    const [bySentence, setBySentence] = useState(false)
 
     const onClickHelp = () => {
         if (help === false) return setHelp(true)
@@ -73,21 +74,37 @@ export const LevelOptions: FC<Props> = ({ words, position, setPosition }) => {
                             <CardActionArea sx={{ padding: 2 }}>
                                 {/* <CardImage word={words[position]} nextImageCome={position !== words.length} /> */}
                                 <CardContent>
-                                    <Typography align='center' fontWeight={help ? 200 : 400} variant="h1" component="h1">
-                                        {words[position].english}
-                                    </Typography>
+
+                                    {bySentence ?
+                                        <Box>
+                                            <Typography fontSize={20} fontWeight={help ? 200 : 400}>{words[position].example1}</Typography>
+                                            <Typography fontSize={20} marginTop={1} fontWeight={help ? 200 : 400}>{words[position].example2}</Typography>
+                                            <Typography fontSize={20} marginTop={1} fontWeight={help ? 200 : 400}>{words[position].example3}</Typography>
+
+                                        </Box>
+                                        :
+                                        <Typography align='center' fontWeight={help ? 200 : 400} variant="h1" component="h1">
+                                            {words[position].english}
+                                        </Typography>
+                                    }
+
                                     {help &&
                                         <Typography align='center' fontWeight={600} variant="h5" component="h5">
-                                            {words[position].spanish}
+                                            {bySentence ?
+                                                <Typography fontSize={25} marginTop={1}>{words[position].example4}</Typography>
+                                                :
+                                                words[position].spanish
+                                            }
                                         </Typography>
                                     }
                                 </CardContent>
                             </CardActionArea>
                         </Card>
 
-                        <IconButton onClick={listenWord} color="success" sx={{ marginTop: 2}}>
+                        <IconButton onClick={listenWord} color="success" sx={{ marginTop: 2 }}>
                             <SoundIcon />
                         </IconButton>
+                        <FormControlLabel control={<Switch checked={bySentence} onClick={() => setBySentence(!bySentence)} />} label="Oraciones" />
 
                         <Grid container marginTop={1} spacing={1}>
                             <Grid item xs={12} sm={4}>

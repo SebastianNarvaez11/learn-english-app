@@ -18,7 +18,11 @@ export interface IWord {
     spanish: string,
     english: string,
     image?: string,
-    points: number
+    points: number,
+    example1?: string,
+    example2?: string,
+    example3?: string;
+    example4?: string
 }
 
 export interface ITranslation {
